@@ -67,49 +67,30 @@ def categorybuy(request, cat = 'OT'):
 
 
 # Login, Logout, Register, Profile views
-
+@login_required
 def register(request):
 
 	if request.method == "POST":
 
-		if request.POST['pass'] == request.POST['passagain']:
-			try:
-				user = User.objects.get(username= request.POST['uname'])
-				return render(request, 'users/register.html', {'error': "Username Already exists"})
+		phnum = request.POST['phone']
+		address = request.POST['address']
+		user = request.user	
 
-			except User.DoesNotExist:
+		if phnum == '':
+			return render(request, 'users/register.html', {'error': "Phone Number is required"})
 
-				phnum = request.POST['phone']
-				address = request.POST['address']
-				name = request.POST['name']
-
-				if request.POST['uname'] == '':
-					return render(request, 'users/register.html', {'error': "Username is required"})
-
-				if name == '':
-					return render(request, 'users/register.html', {'error': "Name is required"})
-
-				if phnum == '':
-					return render(request, 'users/register.html', {'error': "Phone Number is required"})
-
-				user = User.objects.create_user(username = request.POST['uname'], password = request.POST['pass'])
 				
+		newaccount = account(phone_num = phnum, address = address, user = user)
+		newaccount.save()
+	
+		return redirect('profile')
 
 
-				newaccount = account(phone_num = phnum, address = address, user = user, name = name)
-				newaccount.save()
-				auth.login(request, user)
-
-				return redirect('profile')
-
-
-		else:
-			return render(request, 'users/register.html', {'error': "Passwords Dont Match"} )
 
 	return render(request, 'users/register.html')
 
 
-
+'''
 def login(request):
 	if request.method == "POST":
 
@@ -121,21 +102,30 @@ def login(request):
 			return render(request, 'users/login.html', {'error': "Invalid login credentials"})
 
 	return render(request, 'users/login.html')
-
+'''
 
 @login_required
 def logout(request):
 	auth.logout(request)
-	return redirect('login')
+	return redirect('buy')
 
 
 @login_required
 def profile(request):
 
-	user = account.objects.filter(user = request.user)
-	items = 0
+	useraccount = account.objects.filter(user = request.user)
+	items = []
 
-	for u in user:
+	registered = False
+
+	for u in useraccount:
+		registered = True
+	
+
+	if(registered == False):
+		return redirect('register')
+		
+	for u in useraccount:
 		items = u.item_set.all()
 
 
@@ -147,7 +137,7 @@ def profile(request):
 
 
 	context = {
-		'data': user,
+		'data': useraccount,
 		'items': items,
 		'collist':collist
 	}
@@ -162,11 +152,21 @@ def additem(request):
 
 	itemform = forms.ItemForm()
 
+	registered = False
+	useraccount = account.objects.filter(user = request.user)
+
+	for u in useraccount:
+		registered = True
+
+	if(registered == False):
+		return redirect('register')
+
+
 	if request.method == 'POST':
 
 		#print('Arjun JOshi')
 
-		user = account.objects.filter(user = request.user)
+		
 		itemform = forms.ItemForm(request.POST, request.FILES)
 
 		#print("HEY THIS IS THE ITEMFORM")
@@ -184,7 +184,7 @@ def additem(request):
 			category = itemform.cleaned_data['category']
 			
 			owner = 0
-			for u in user:
+			for u in useraccount:
 				owner = u
 
 			newitem = item(title = title, price = price, description = description, category = category, owner = owner, image = image)
@@ -202,25 +202,26 @@ def additem(request):
 	return render(request, 'users/additem.html',context)
 
 
-def delitem(request, it = ''):
+def delitem(request, it = 0):
 	#print('Hey this is delitems')
 
 
 	if request.method == 'POST':
-		ditem = item.objects.get(title = it)
+		ditem = item.objects.get(id = it)
+		ditem.image.delete(save = True)
 		ditem.delete()
 
 	return redirect('profile')
 
 
-def viewitem(request, it = ''):
+def viewitem(request, it = 0):
 	#print("Hey this is viewitem")
 
 	context = {}
 
 	if request.method == 'POST':
 
-		vitem = item.objects.get(title = it)
+		vitem = item.objects.get(id = it)
 		context = {'item': vitem}
 
 	return render(request, 'users/viewitem.html', context)

@@ -6,16 +6,15 @@ class account(models.Model):
 
 	address = models.CharField(max_length = 256)
 	phone_num = models.CharField(max_length = 13)
-	name = models.CharField(max_length = 100)
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
 
 	def __str__(self):
-		return self.name
+		return self.user.first_name
 
 
 CATEGORY_CHOICES = (
-		('CY', 'cycle'),
 		('BO', 'books'),
+		('CY', 'cycle'),
 		('WS', 'workshop'),
 		('ED', 'eng. design'),
 		('CL', 'clothes'),
@@ -25,7 +24,7 @@ CATEGORY_CHOICES = (
 
 class item(models.Model):
 
-	title = models.CharField(max_length = 100, unique = True)
+	title = models.CharField(max_length = 100)
 	createdAt = models.DateTimeField(auto_now_add = True)
 	price = models.FloatField()
 	description = models.TextField()

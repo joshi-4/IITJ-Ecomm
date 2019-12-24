@@ -22,13 +22,13 @@
 	<div class="container" >
 
 	<h1>Profile</h1>	
-
+	<hr>
 	{% for d in data %}
 		
-		<h4>Name:  <span class="badge badge-light"> {{ d.name }} </span> </h4>
-		<h4>Username:  <span class="badge badge-light"> {{ d.user }} </span>  </h4>
-		<h4>Phone:  <span class="badge badge-light"> {{ d.phone_num }} </span> </h4>
-		<h4>Address:  <span class="badge badge-light"> {{ d.address }} </span> </h4>
+		<h4>Name :  {{ d.user.first_name }} </h4>
+		<h4>Roll No. :   {{ d.user.last_name }}  </h4>
+		<h4>Phone : {{ d.phone_num }}  </h4>
+		<h4>Address : {{ d.address }} </h4>
 
 
 	{% endfor %}
@@ -53,7 +53,7 @@
 							    <h4 class="card-title">{{item.title}}</h4>
 							    <p class="card-text">Rs. {{item.price}}</p>
 
-							   	<form method="post" action="{% url 'delitem' item.title %}">
+							   	<form method="post" action="{% url 'delitem' item.id %}">
 							   		{% csrf_token %}
 							   			<input type="submit" value="Remove">
 							   		

@@ -10,6 +10,8 @@
 			margin-bottom: 12%;
 		}
 
+		
+
 
 	</style>
 		
@@ -40,20 +42,50 @@
 					{% for item in c %}
 						<div class= "row-fluid">
 
-						<div class="card">
-						  <img class="card-img-top" src="{{ item.image.url }}" alt="Card image">
-						  <div class="card-body">
-						    <h4 class="card-title">{{item.title}}</h4>
-						    <p class="card-text">Rs. {{item.price}}</p>
-						   		
-						    <form method="post" action="{% url 'viewitem' item.title %}">
-						   		{% csrf_token %}
-						   		<input type="submit" value="View">
-						   	</form>
-						   			
+								
 
-						  </div>
-						</div>			
+
+							<!--Card-->
+							<div class="card card-cascade card-ecommerce">
+
+							  <!--Card image-->
+							  <div class="view view-cascade overlay">
+							    <img class="card-img-top" src="{{ item.image.url }}" 	alt="Card-Image">
+							    <a>
+							      <div class="mask rgba-white-slight"></div>
+							    </a>
+							  </div>
+							  <!--/.Card image-->
+
+							  <!--Card content-->
+							  <div class="card-body card-body-cascade text-center">
+							    <!--Category & Title-->
+							    
+							    <h4 class="card-title"><strong>{{item.title}}</strong></h4>
+
+							    <!--Description-->
+							    <p class="card-text"> {{ item.description }}
+							    </p>
+
+							    <!--Card footer-->
+							    <div class="card-footer" style="background-color: white;">
+							      <span class="float-left"><b>₹{{item.price}}</b></span>
+							      <span class="float-right">
+
+							      	<form method="post" action="{% url 'viewitem' item.id %}">
+								   		{% csrf_token %}
+								   		<input type="submit" value="View">
+								   	</form>
+
+									
+							      </span>
+							    </div>
+
+							  </div>
+							  <!--/.Card content-->
+
+							</div>
+							<!--/.Card-->
 
 						</div>
 					{% endfor %}	
