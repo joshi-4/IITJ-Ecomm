@@ -5,6 +5,7 @@ from django.contrib import auth
 from users.models import account, item
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 # Create your views here.
@@ -15,8 +16,31 @@ def index(request):
 def aboutus(request):
 	return render(request, 'users/aboutus.html')
 
+# Search
  
+def search(request):
+	
+	query = request.GET.get('q')
+	results = item.objects.filter(Q(title__icontains = query) | Q(description__icontains = query) | Q(price__icontains = query))
 
+	n = len(results)
+	
+	collist = [[],[],[],[]]
+
+	for i in range(n):
+		collist[i%4].append(results[i])
+	
+	print("This is the collist")
+	print(collist)
+
+	context = { 
+		'collist':collist,	
+	 }
+
+
+	return render(request,'users/buy.html', context)
+
+	
 # Buy views
 
 def buy(request):

@@ -63,7 +63,11 @@
 
        <header class="site-header">
        <nav class="navbar blue-gradient navbar-expand-md navbar-dark bg-info fixed-top">
+       
+
        <div class="container">
+
+        
          <a class="navbar-brand" href="{% url 'buy' %}">IITJ Commerce</a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
            <span class="navbar-toggler-icon"></span>
@@ -71,6 +75,18 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               
+              <li>
+                    
+                  <form class="form-inline" method="GET" action="{% url 'search' %}" >
+                    <input name="q" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                    
+                    <button type="submit" style="background-color: transparent; border-width: 0px; "><i class="fas fa-search" style="color: white;"></i></button>
+
+                  </form>
+                
+              </li>
+
+
               <li class="nav-item">
                 <a class="nav-link" href= "{% url 'buy' %}"  >Buy</a>
                 {# direct to about page on cliclking about button#}
@@ -94,9 +110,10 @@
                   </div>
               </li>              
 
+      
            </ul>
           </div>
-
+        
           <!-- Navbar Right side -->
           <div class="navbar-nav">
               {% if user.is_authenticated %}

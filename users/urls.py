@@ -14,6 +14,7 @@ urlpatterns = [
 	path('buy/<str:cat>', views.categorybuy, name = 'catbuy'),
 	path('aboutus/', views.aboutus, name = 'aboutus'),
 	path('profile/remove/<int:it>', views.delitem, name = 'delitem'),
+	path('results/', views.search, name = 'search'),
 ]
 
 if settings.DEBUG:
