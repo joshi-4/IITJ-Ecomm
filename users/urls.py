@@ -8,12 +8,14 @@ urlpatterns = [
 	path('register/', views.register, name = 'register'),
 	path('logout/', views.logout, name = 'logout'),
 	path('profile/',views.profile, name = 'profile'),
+	path('profile/remove/<int:it>', views.delitem, name = 'delitem'),
+	path('profile/<str:message>',views.profile, name = 'profile'),
 	path('additem/', views.additem, name = 'additem'),
 	path('buy/', views.buy, name = 'buy'),
+	path('buy/<str:message>', views.buy, name = 'buy'),
 	path('buy/item/<int:it>', views.viewitem, name = 'viewitem'),
-	path('buy/<str:cat>', views.categorybuy, name = 'catbuy'),
+	path('catbuy/<str:cat>', views.categorybuy, name = 'catbuy'),
 	path('aboutus/', views.aboutus, name = 'aboutus'),
-	path('profile/remove/<int:it>', views.delitem, name = 'delitem'),
 	path('results/', views.search, name = 'search'),
 ]
 

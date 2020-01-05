@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
-
+ 
 # Create your views here.
 
 def index(request):
@@ -43,7 +43,7 @@ def search(request):
 	
 # Buy views
 
-def buy(request):
+def buy(request , message = ""):
 
 	item_all = item.objects.all().order_by('-createdAt')
 
@@ -59,7 +59,8 @@ def buy(request):
 
 	context = { 
 		'allitems': item_all,
-		'collist':collist,	
+		'collist':collist,
+		'message':message,	
 	 }
 
 	return render(request, 'users/buy.html', context)
@@ -131,11 +132,11 @@ def login(request):
 @login_required
 def logout(request):
 	auth.logout(request)
-	return redirect('buy')
+	return redirect('buy', message= "Logged Out")
 
 
 @login_required
-def profile(request):
+def profile(request, message = ""):
 
 	useraccount = account.objects.filter(user = request.user)
 	items = []
@@ -163,7 +164,8 @@ def profile(request):
 	context = {
 		'data': useraccount,
 		'items': items,
-		'collist':collist
+		'collist':collist,
+		'message':message,
 	}
 
 	return render(request, 'users/profile.html',context)
@@ -214,7 +216,7 @@ def additem(request):
 			newitem = item(title = title, price = price, description = description, category = category, owner = owner, image = image)
 			newitem.save()
 
-			return redirect('profile')
+			return redirect('profile', message= "Item added successfully" )
 			#print('Item is saved')
 
 

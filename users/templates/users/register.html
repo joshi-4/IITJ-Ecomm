@@ -4,8 +4,7 @@
 
 <div class="container">
 
-	<h1>Additional Info.</h1>
-
+	
 
 	{% if error %}
 	{{ error }}
@@ -17,20 +16,44 @@
 	
 	{% csrf_token %}
 
-    <div class="form-group">
-      <label for="exampleInputEmail1">Phone No.*</label>
-      <input type="text" name="phone" >
-    </div>
+	<!-- Card -->
+<div class="card mx-xl-5">
 
-  	<div class="form-group">
-    	<label for="exampleInputEmail1">Address</label>
-    	<input type="text" name="address" >
-  	</div>
+  <!-- Card body -->
+  <div class="card-body">
 
-	<input type="submit" value="Submit">
-	
+    <!-- Default form subscription -->
+    <form>
+      <h1 style="text-align: center;">Additional Info.</h1>
+
+      <!-- Default input name -->
+      <label for="materialRegisterFormPhone" class="grey-text font-weight-light">Phone No.*</label>
+      <input type="text" name = "phone" id="materialRegisterFormPhone" class="form-control">
+
+      <br>
+
+      <!-- Default input email -->
+      <label for="defaultFormCardSubjectEx" class="grey-text font-weight-light">Address</label>
+      <input type="text" name="address" id="defaultFormCardMessageEx" class="form-control">
+
+      <div class="text-center py-4 mt-3">
+        <button class="btn btn-outline-purple" type="submit">Submit<i
+            class="fa fa-paper-plane-o ml-2"></i></button>
+      </div>
+    </form>
+    <!-- Default form subscription -->
+
+  </div>
+  <!-- Card body -->
+
+</div>
+<!-- Card -->
+
 
 </form>
+
+
+
 
 
 </div>

@@ -18,6 +18,13 @@
 
 
 {% block content %}
+
+	{% if message %}
+  		<div class="alert alert-success" role="alert">
+    		{{ message }}
+  		</div>
+  	{% endif %}
+
 	
 	<div class="container" >
 
@@ -25,8 +32,7 @@
 	<hr>
 	{% for d in data %}
 		
-		<h4>Name :  {{ d.user.first_name }} </h4>
-		<h4>Roll No. :   {{ d.user.last_name }}  </h4>
+		<h4>Name :  {{ d.user.first_name }} {{ d.user.last_name }} </h4>
 		<h4>Phone : {{ d.phone_num }}  </h4>
 		<h4>Address : {{ d.address }} </h4>
 
